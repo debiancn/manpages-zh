@@ -1,55 +1,109 @@
 #!/usr/bin/make -f
-package	:=	manpages-zh
-prefix	:=	$(shell pwd)/debian/$(package)
-arch	:=	$(shell dpkg --print-architecture)
+# -*- makefile -*-
+# Rewrite by Carlos Z.F. Liu <carlosliu@users.sourceforge.net>
 
-DESTDIR	:=	$(prefix)/usr/share
-CONFDIR	:=	$(prefix)/etc
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
-binary: u8 gb install
+MANDIR=$(CURDIR)/debian/manpages-zh/usr/share/man/
 
-u8:u8-stamp
-u8-stamp:
+build: build-stamp
+build-stamp:
 	dh_testdir
-	dh_testroot
-	$(MAKE) u8
-	touch u8-stamp
-gb:gb-stamp
-gb-stamp:
-	dh_testdir
-	dh_testroot
 	$(MAKE) gb
-	touch gb-stamp
-	
-install:u8-stamp gb-stamp
+	$(MAKE) b5
+	touch build-stamp
+
+clean:
 	dh_testdir
 	dh_testroot
-	dh_clean -k
-	$(MAKE) DESTDIR=$(DESTDIR) install-u8
-	$(MAKE) DESTDIR=$(DESTDIR) CONFDIR=$(CONFDIR) install-gb
+	rm -f build-stamp
+
+	# Add here commands to clean up after the build process.
+	-$(MAKE) clean
+
+	chmod +x utils/totw.pl
+	dh_clean 
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k 
 	dh_installdirs
-	dh_installdocs DOCS/* README*
-	dh_installchangelogs
-	cp -R debian/$(package)/* debian/tmp/
-	dh_link
-	dh_strip
-	dh_compress --exclude=man.macros
+
+	# Add here commands to install the package into debian/manpages-zh.
+	$(MAKE) install-gb DESTDIR=$(CURDIR)/debian/manpages-zh
+	$(MAKE) install-b5 DESTDIR=$(CURDIR)/debian/manpages-zh
+
+
+binary: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs DOCS/ChangeLog
+	dh_installdocs
+
+	# move lapack man packages from manl to man3
+	cd $(MANDIR)/zh_CN/manl && \
+	  for f in *.l ; do \
+	    f2=$$(echo $$f | sed -e 's/\.l/.3/') ; \
+	    mv $(MANDIR)/zh_CN/manl/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
+	    mv $(MANDIR)/zh_TW/manl/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
+	  done;
+
+	# move BWidget and tcllib man packages from mann into man3
+	cd $(MANDIR)/zh_CN/mann && \
+	  for f in `cat $(CURDIR)/debian/03misc` ; do \
+	    f2=$$(echo $$f | sed -e 's/\.n/.3/') ; \
+	    mv $(MANDIR)/zh_CN/mann/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
+	    mv $(MANDIR)/zh_TW/mann/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
+	  done;
+
+	# move Tcl man package from mann into man3
+	cd $(MANDIR)/zh_CN/mann && \
+	  for f in `cat $(CURDIR)/debian/03tcl` ; do \
+	    f2=$$(echo $$f | sed -e 's/\.n/.3tcl/') ; \
+	    mv $(MANDIR)/zh_CN/mann/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
+	    mv $(MANDIR)/zh_TW/mann/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
+	  done;
+
+	# move Tk man package from mann into man3
+	cd $(MANDIR)/zh_CN/mann && \
+	  for f in `cat $(CURDIR)/debian/03tk` ; do \
+	    f2=$$(echo $$f | sed -e 's/\.n/.3tk/') ; \
+	    mv $(MANDIR)/zh_CN/mann/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
+	    mv $(MANDIR)/zh_TW/mann/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
+	  done;
+
+	cd $(CURDIR) && \
+	rmdir $(MANDIR)/zh_CN/mann $(MANDIR)/zh_CN/manl
+	rmdir $(MANDIR)/zh_TW/mann $(MANDIR)/zh_TW/manl
+
+	# fix so link to memory.3tcl
+	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_CN/man3/ckalloc.3tcl
+	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_CN/man3/ckfree.3tcl
+	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_TW/man3/ckalloc.3tcl
+	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_TW/man3/ckfree.3tcl
+
+	# mv environ.5 to man7, fix a Debian specific bug
+	sed -e 's/ENVIRON(5)/ENVIRON(7)/g' $(MANDIR)/zh_CN/man5/environ.5 > $(MANDIR)/zh_CN/man7/environ.7
+	sed -e 's/ENVIRON(5)/ENVIRON(7)/g' $(MANDIR)/zh_TW/man5/environ.5 > $(MANDIR)/zh_TW/man7/environ.7
+	rm $(MANDIR)/zh_CN/man5/environ.5
+
+	# compressing manpages
+	echo "\n-- fixing permission and compressing --\n" ; \
+	for i in man[123456789] ; do \
+	  chmod 644 $(MANDIR)/zh_CN/$$i/*.? ; \
+	  chmod 644 $(MANDIR)/zh_TW/$$i/*.? ; \
+	  gzip -9 $(MANDIR)/zh_CN/$$i/*.? ; \
+	  gzip -9 $(MANDIR)/zh_TW/$$i/*.? ; \
+	done;
+
+	dh_compress
+	install -D -m644 COPYING $(CURDIR)/debian/manpages-zh/usr/share/doc/manpages-zh/GFDL
 	dh_fixperms
 	dh_installdeb
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
-	
-clean:
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	rm -f *-stamp
-	make clean
-	dh_clean
-	rm -rf debian/$(package)
-uninstall:
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	make DESTDIR=$(DESTDIR) CONFDIR=$(CONFDIR) uninstall
+
+.PHONY: build clean binary install

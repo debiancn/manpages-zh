@@ -1,3 +1,18 @@
+manpages-zh (1.5-1) unstable; urgency=high
+
+  * New upstream release
+  * Maintainer changed.
+  * Bump Standards-Version to 3.6.1
+  * Rename src pkg to manpages-zh, fix the name conflict RC bug
+    (Closes: #267236)
+  * Move man5/environ.5 to man7/environ.7 (Closes: #140771)
+  * Readd zh_TW translation
+  * Move lapack, Tcl and Tk manpages from mann to man3.
+  * Change the copyright content according the newest upstream release.
+  * Little changes to the package description.
+
+ -- Carlos Z.F. Liu <carlosliu@users.sourceforge.net>  Sat,  2 Apr 2005 16:18:15 +1200
+
 cman (1.4-7) unstable; urgency=low
 
   * Added some more translations and small bug fixes.
