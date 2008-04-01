@@ -5,7 +5,7 @@ manpages-zh (1.5.1-1) unstable; urgency=low
     - debian/control: updated.
   * debian/rules: missing binary-arch and binary-indep targets in debian/rules
     (Policy 4.9) (Closes: #395805)
-  * debian/control: sysutils -> tofrodos (Closes: #382168)
+  * debian/control: don't build depends on sysutils (Closes: #382168)
   * debian/rules: Please stop providing man pages belonging to the passwd and
     login packages (Closes: #330577)
   * debian/control: bump standards version to 3.7.3.
@@ -14,8 +14,11 @@ manpages-zh (1.5.1-1) unstable; urgency=low
   * debian/control: new homepage, move homepage from description to a field.
   * debian/control: build-depends-on-1-revision, build depends on
     zh-autoconvert (>= 0.3.13) instead of 0.3.13-1.
+  * debian/control: build depends on cdbs.
+  * debian/rules: use cdbs.
+  * debian/docs: remove unaviable files. 
 
- -- LI Daobing <lidaobing@gmail.com>  Thu, 14 Feb 2008 23:02:34 +0800
+ -- LI Daobing <lidaobing@gmail.com>  Tue, 01 Apr 2008 23:59:15 +0800
 
 manpages-zh (1.5-1) unstable; urgency=high
 
