@@ -18,10 +18,7 @@ clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
-
-	# Add here commands to clean up after the build process.
-	-$(MAKE) clean
-
+	[ ! -f Makefile ] || $(MAKE) clean
 	chmod +x utils/totw.pl
 	dh_clean 
 
@@ -32,71 +29,24 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/manpages-zh.
-	$(MAKE) install-gb DESTDIR=$(CURDIR)/debian/manpages-zh
-	$(MAKE) install-b5 DESTDIR=$(CURDIR)/debian/manpages-zh
+	#$(MAKE) install-gb DESTDIR=$(CURDIR)/debian/manpages-zh
+	#$(MAKE) install-b5 DESTDIR=$(CURDIR)/debian/manpages-zh
+	#rm -f $(MANDIR)/zh_CN/man1/su.1.gz
+	#rm -f $(MANDIR)/zh_TW/man1/su.1.gz
+	#rm -f $(MANDIR)/zh_CN/man1/newgrp.1.gz
+	#rm -f $(MANDIR)/zh_TW/man1/newgrp.1.gz
 
-
-binary: build install
+binary-indep: build install
 	dh_testdir
 	dh_testroot
 	dh_installchangelogs DOCS/ChangeLog
 	dh_installdocs
-
-	# move lapack man packages from manl to man3
-	cd $(MANDIR)/zh_CN/manl && \
-	  for f in *.l ; do \
-	    f2=$$(echo $$f | sed -e 's/\.l/.3/') ; \
-	    mv $(MANDIR)/zh_CN/manl/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
-	    mv $(MANDIR)/zh_TW/manl/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
-	  done;
-
-	# move BWidget and tcllib man packages from mann into man3
-	cd $(MANDIR)/zh_CN/mann && \
-	  for f in `cat $(CURDIR)/debian/03misc` ; do \
-	    f2=$$(echo $$f | sed -e 's/\.n/.3/') ; \
-	    mv $(MANDIR)/zh_CN/mann/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
-	    mv $(MANDIR)/zh_TW/mann/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
-	  done;
-
-	# move Tcl man package from mann into man3
-	cd $(MANDIR)/zh_CN/mann && \
-	  for f in `cat $(CURDIR)/debian/03tcl` ; do \
-	    f2=$$(echo $$f | sed -e 's/\.n/.3tcl/') ; \
-	    mv $(MANDIR)/zh_CN/mann/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
-	    mv $(MANDIR)/zh_TW/mann/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
-	  done;
-
-	# move Tk man package from mann into man3
-	cd $(MANDIR)/zh_CN/mann && \
-	  for f in `cat $(CURDIR)/debian/03tk` ; do \
-	    f2=$$(echo $$f | sed -e 's/\.n/.3tk/') ; \
-	    mv $(MANDIR)/zh_CN/mann/$$f $(MANDIR)/zh_CN/man3/$$f2 ; \
-	    mv $(MANDIR)/zh_TW/mann/$$f $(MANDIR)/zh_TW/man3/$$f2 ; \
-	  done;
-
-	cd $(CURDIR) && \
-	rmdir $(MANDIR)/zh_CN/mann $(MANDIR)/zh_CN/manl
-	rmdir $(MANDIR)/zh_TW/mann $(MANDIR)/zh_TW/manl
-
-	# fix so link to memory.3tcl
-	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_CN/man3/ckalloc.3tcl
-	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_CN/man3/ckfree.3tcl
-	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_TW/man3/ckalloc.3tcl
-	echo ".so man3/memory.3tcl" > $(MANDIR)/zh_TW/man3/ckfree.3tcl
+	dh_installman
 
 	# mv environ.5 to man7, fix a Debian specific bug
 	sed -e 's/ENVIRON(5)/ENVIRON(7)/g' $(MANDIR)/zh_CN/man5/environ.5 > $(MANDIR)/zh_CN/man7/environ.7
 	sed -e 's/ENVIRON(5)/ENVIRON(7)/g' $(MANDIR)/zh_TW/man5/environ.5 > $(MANDIR)/zh_TW/man7/environ.7
 	rm $(MANDIR)/zh_CN/man5/environ.5
-
-	# compressing manpages
-	echo "\n-- fixing permission and compressing --\n" ; \
-	for i in man[123456789] ; do \
-	  chmod 644 $(MANDIR)/zh_CN/$$i/*.? ; \
-	  chmod 644 $(MANDIR)/zh_TW/$$i/*.? ; \
-	  gzip -9 $(MANDIR)/zh_CN/$$i/*.? ; \
-	  gzip -9 $(MANDIR)/zh_TW/$$i/*.? ; \
-	done;
 
 	dh_compress
 	install -D -m644 COPYING $(CURDIR)/debian/manpages-zh/usr/share/doc/manpages-zh/GFDL
@@ -106,4 +56,8 @@ binary: build install
 	dh_md5sums
 	dh_builddeb
 
-.PHONY: build clean binary install
+binary-arch:
+
+binary: binary-indep binary-arch
+
+.PHONY: build clean binary install binary-arch binary-indep

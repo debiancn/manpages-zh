@@ -1,9 +1,10 @@
 Source: manpages-zh
 Section: doc
 Priority: optional
-Maintainer: Carlos Z.F. Liu <carlosliu@users.sourceforge.net>
-Build-Depends: debhelper (>= 4.0.0), zh-autoconvert (>= 0.3.13-1), perl, sysutils
-Standards-Version: 3.6.1
+Maintainer: LI Daobing <lidaobing@gmail.com>
+Build-Depends: debhelper (>= 4.0.0), zh-autoconvert (>= 0.3.13), perl, tofrodos
+Standards-Version: 3.7.3
+Homepage: http://code.google.com/p/manpages-zh/
 
 Package: manpages-zh
 Architecture: all
@@ -15,5 +16,3 @@ Description: Chinese manual pages
  This package contains the Chinese manual pages translated by
  the Chinese Man Pages Project (CMPP).  Both zh_CN and zh_TW
  (Simplified and Traditional Chinese) versions are provided.
- .
- Homepage: http://cmpp.linuxforum.net/
