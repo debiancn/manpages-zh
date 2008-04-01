@@ -1,94 +1,3 @@
-.rn '' }`
-.de Sh
-.br
-.if t .Sp
-.ne 5
-.PP
-\fB\\$1\fR
-.PP
-..
-.de Sp
-.if t .sp .5v
-.if n .sp
-..
-.de Ip
-.br
-.ie \\n(.$>=3 .ne \\$3
-.el .ne 3
-.IP "\\$1" \\$2
-..
-.de Vb
-.ft CW
-.nf
-.ne \\$1
-..
-.de Ve
-.ft R
-
-.fi
-..
-'''
-'''
-'''     Set up \*(-- to give an unbreakable dash;
-'''     string Tr holds user defined translation string.
-'''     Bell System Logo is used as a dummy character.
-'''
-.tr \(*W-|\(bv\*(Tr
-.ie n \{\
-.ds -- \(*W-
-.ds PI pi
-.if (\n(.H=4u)&(1m=24u) .ds -- \(*W\h'-12u'\(*W\h'-12u'-\" diablo 10 pitch
-.if (\n(.H=4u)&(1m=20u) .ds -- \(*W\h'-12u'\(*W\h'-8u'-\" diablo 12 pitch
-.ds L" ""
-.ds R" ""
-'''   \*(M", \*(S", \*(N" and \*(T" are the equivalent of
-'''   \*(L" and \*(R", except that they are used on ".xx" lines,
-'''   such as .IP and .SH, which do another additional levels of
-'''   double-quote interpretation
-.ds M" """
-.ds S" """
-.ds N" """""
-.ds T" """""
-.ds L' '
-.ds R' '
-.ds M' '
-.ds S' '
-.ds N' '
-.ds T' '
-'br\}
-.el\{\
-.ds -- \(em\|
-.tr \*(Tr
-.ds L" ``
-.ds R" ''
-.ds M" ``
-.ds S" ''
-.ds N" ``
-.ds T" ''
-.ds L' `
-.ds R' '
-.ds M' `
-.ds S' '
-.ds N' `
-.ds T' '
-.ds PI \(*p
-'br\}
-.\"	If the F register is turned on, we'll generate
-.\"	index entries out stderr for the following things:
-.\"		TH	Title 
-.\"		SH	Header
-.\"		Sh	Subsection 
-.\"		Ip	Item
-.\"		X<>	Xref  (embedded
-.\"	Of course, you have to process the output yourself
-.\"	in some meaninful fashion.
-.if \nF \{
-.de IX
-.tm Index:\\$1\t\\n%\t"\\$2"
-..
-.nr % 0
-.rr F
-.\}
 .TH A2P 1 "perl 5.005, patch 03" "29/Jul/1998" "Perl Programmers Reference Guide"
 .UC
 .if n .hy 0
@@ -190,26 +99,25 @@ a2p \- Awk 到 Perl 翻译器
 .SH "描述 (DESCRIPTION)"
 \fIA2p\fR 从命令行或标准输入取得一个awk脚本文件，
 并且向标准输出产生一个相同功能的 \fIperl\fR 脚本文件。
-.Sh "选项 (OPTIONS)"
+.SH "选项 (OPTIONS)"
 可选选项有:
-.Ip "\fB\-D<number>\fR" 5
+.IP "\fB\-D<number>\fR" 5
 设置调试标记。
-.Ip "\fB\-F<character>\fR" 5
+.IP "\fB\-F<character>\fR" 5
 告诉a2p，awk脚本总是带 \fB\-F\fR 选项执行。
-.Ip "\fB\-n<fieldlist>\fR" 5
+.IP "\fB\-n<fieldlist>\fR" 5
 如果输入不分解为一个数组，你需要指定输入的各字段的名称。
 假如要翻译一个用于处理密码文件的awk脚本，你应当这样:
-.Sp
-.Vb 1
-\&        a2p -7 -nlogin.password.uid.gid.gcos.shell.home
-.Ve
+
+a2p -7 -nlogin.password.uid.gid.gcos.shell.home
+
 任何定界符都可以用来分隔字段名。
-.Ip "\fB\-<number>\fR" 5
+.IP "\fB\-<number>\fR" 5
 使得a2p总是假设输入包含那么多字段。
-.Ip "\fB\-o\fR" 5
+.IP "\fB\-o\fR" 5
 告诉a2p使用旧的awk行为。当前，唯一的区别是旧的awk总是有一个
 每行的循环，即使没有对每行的操作；新的awk不是这样。
-.Sh "\*(M"Considerations\*(S""
+.SS "Considerations"
 a2p 不能翻译得像人一样好，但是通常都做得很好。
 在生成的perl脚本中，你应当检查和修改一些东西。这里是
 其中的一些，没有顺序。
@@ -222,7 +130,7 @@ awk 中有一个习惯，就是将一个字符串表达式放在 \fIint()\fR 函
 perl 中数字比较和字符比较是不一样的。对这两种情况，awk只有一个操作符，
 但是会在运行时判断是哪一种。在这一点上a2p不对awk进行彻底的模拟。
 它会猜测哪一种是你想要的。大多数时候它是对的，但是不能保证。
-这样的猜测都以 \*(L"\f(CW#???\fR\*(R" 注释来标记。你应当
+这样的猜测都以 ""#???"" 注释来标记。你应当
 仔细检查它们，至少用perl的 \fB\-w\fR 选项来运行它们一次，这样
 perl会警告你在应当使用eq 的地方使用了＝＝。
 .PP
@@ -239,7 +147,7 @@ awk中的exit语句不会退出。如果有 \s-1END\s0 段，它会转到那里�
 中没有必要。你只要删掉 \s-1END\s0 块中的条件变量，直接退出就可以了。
 .PP
 perl 中有两种数组，数字下标的和关联数组。perl中的关联数组叫做
-散列 \*(L"hashes\*(R"。awk中的数组总是翻译为散列，但是如果你知道
+散列 "hashes"。awk中的数组总是翻译为散列，但是如果你知道
 索引总是数字，你就可以将 {...} 转为 [...]。对散列的遍历用到了
 \fIkeys()\fR 函数，但是对数组的散列不会。你需要修改对这样的数组进行遍历
 的循环。
@@ -256,14 +164,14 @@ $# 的值是 %.20g。如果你想使用 \s-1OFMT\s0 的默认值，你需要
 函数都进行更改，保证正确。
 .PP
 a2p会聪明地在在未处理的脚本中添加注释
-\*(L"# Here is a workaround because awk is dumb\*(R"
+"# Here is a workaround because awk is dumb"
 .PP
 awk脚本经常使用在shell脚本中，通过管道接受和输出文本。
-大部分时候这种shell脚本“wrapper” 可以和perl合并，
+大部分时候这种shell脚本"wrapper"可以和perl合并，
 因为perl可以建立输入输出管道，做其他awk不能做的事情。
 .PP
 对\s-1RSTART\s0 和 \s-1RLENGTH\s0 变量进行引用的脚本可以简单地
-修改为对变量$`, $& 和 $\*(R' 的引用，只要他们是在模式匹配的范围之内。
+修改为对变量$\`, $& 和 $\' 的引用，只要他们是在模式匹配的范围之内。
 .PP
 产生的perl脚本可能含有子程序来处理awk的getline和print函数。由于
 a2p通常将正确性放在首位而不是效率，一般可以将子程序重写得更有效率。
@@ -281,11 +189,9 @@ Larry Wall <\fIlarry@wall.org\fR>
 .SH "文件 (FILE)"
 .SH "另见 (SEE ALSO)"
 .PP
-.Vb 3
-\& perl   perl 编译器和解释器
-\& 
-\& s2p    sed 到 perl的翻译工具
-.Ve
+perl   perl 编译器和解释器
+ 
+s2p    sed 到 perl的翻译工具
 .SH "诊断 (DIAGNOSTICS)"
 .SH "BUGS"
 可以在运行时根据操作数来选择字符还是数字操作，从而模拟awk。
@@ -298,40 +204,3 @@ Larry Wall <\fIlarry@wall.org\fR>
 .BR 2003/10/25
 .SH "《中国Linux论坛man手册页翻译计划》" 
 http://cmpp.linuxforum.net
-
-.rn }` ''
-.IX Title "A2P 1"
-.IX Name "a2p - Awk to Perl translator"
-
-.IX Header "NAME"
-
-.IX Header "SYNOPSIS"
-
-.IX Header "DESCRIPTION"
-
-.IX Subsection "Options"
-
-.IX Item "\fB\-D<number>\fR"
-
-.IX Item "\fB\-F<character>\fR"
-
-.IX Item "\fB\-n<fieldlist>\fR"
-
-.IX Item "\fB\-<number>\fR"
-
-.IX Item "\fB\-o\fR"
-
-.IX Subsection "\*(M"Considerations\*(S""
-
-.IX Header "ENVIRONMENT"
-
-.IX Header "AUTHOR"
-
-.IX Header "FILES"
-
-.IX Header "SEE ALSO"
-
-.IX Header "DIAGNOSTICS"
-
-.IX Header "BUGS"
-
