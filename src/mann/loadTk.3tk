@@ -71,8 +71,6 @@
 '\"
 '\"	# Set up traps and other miscellaneous stuff for Tcl/Tk man pages.
 .TH "loadTk" 3tk 8.0 Tk "Tk Built-In Commands"
-.BS
-'\" Note:  do not modify the .SH NAME line immediately below!
 .SH NAME
 loadTk \- 把 Tk 装载到一个安全解释器中。
 .SH "总览 SYNOPSIS"
