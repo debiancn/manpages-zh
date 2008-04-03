@@ -1,7 +1,12 @@
 This package was debianized by Carlos Z.F. Liu <carlosliu@users.sourceforge.net> on
 Sat,  2 Apr 2005 16:31:27 +1200.
 
-These manual pages were written and translated by many different people
+Copyright:
+ Copyright 2008 LI Daobing <lidaobing@gmail.com>
+ Copyright 2008 Ji ZhengYu <zhengyuji@gmail.com>
+ Copyright 2000-2004 CMPP Project
+
+The manual pages were written and translated by many different people
 and improved by probably even more.  Listing all authors and
 modificators for each page is not possible, but most of them are listed
 in /usr/share/doc/manpages-zh/THANKS.gz.

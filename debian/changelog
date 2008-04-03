@@ -10,15 +10,17 @@ manpages-zh (1.5.1-1) unstable; urgency=low
     login packages (Closes: #330577)
   * debian/control: bump standards version to 3.7.3.
   * debian/rules: debian-rules-ignores-make-clean-error.
-  * debian/copyright: copyright-should-refer-to-common-license-file-for-gfdl.
+  * debian/copyright: 
+    - copyright-should-refer-to-common-license-file-for-gfdl.
+    - add new copyright holder.
   * debian/control: new homepage, move homepage from description to a field.
   * debian/control: build-depends-on-1-revision, build depends on
     zh-autoconvert (>= 0.3.13) instead of 0.3.13-1.
   * debian/control: build depends on cdbs.
   * debian/rules: use cdbs.
-  * debian/docs: remove unaviable files. 
+  * debian/docs: remove unaviable files.
 
- -- LI Daobing <lidaobing@gmail.com>  Tue, 01 Apr 2008 23:59:15 +0800
+ -- LI Daobing <lidaobing@gmail.com>  Thu, 03 Apr 2008 23:21:05 +0800
 
 manpages-zh (1.5-1) unstable; urgency=high
 
