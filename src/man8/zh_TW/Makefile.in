@@ -40,6 +40,10 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
+man8dir = $(mandir)/man8
+am__installdirs = "$(DESTDIR)$(man8dir)"
+NROFF = nroff
+MANS = $(man_MANS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -118,7 +122,7 @@ top_srcdir = @top_srcdir@
 zh_CN = @zh_CN@
 zh_TW = @zh_TW@
 MANPAGES = badblocks.8 bdflush.8 blockdev.8 chat.8 chpasswd.8 convertquota.8 cron.8 dmesg.8 edquota.8 exportfs.8 fdisk.8 fsck.8 groupadd.8 groupdel.8 groupmod.8 halt.8 hdparm.8 ifconfig.8 imapd.8 inetd.8 init.8 iptables.8 iptables-restore.8 iptables-save.8 lilo.8 losetup.8 lspci.8 mailstats.8 MAKEDEV.8 makemap.8 mingetty.8 mkfs.8 mkswap.8 modinfo.8 named-bootconf.8 netstat.8 nmbd.8 ntsysv.8 ping.8 pppd.8 printcap.8 quotacheck.8 quotaoff.8 quotaon.8 quotastats.8 ramsize.8 rdev.8 repquota.8 rootflags.8 route.8 rpm.8 setclock.8 setquota.8 setserial.8 showmount.8 shutdown.8 smbd.8 smbmnt.8 smbmount.8 smbpasswd.8 smbspool.8 smbumount.8 svnserve.8 swapoff.8 swapon.8 swat.8 sync.8 tcpdump.8 tzselect.8 umount.8 useradd.8 userdel.8 usermod.8 vidmode.8 vmstat.8 xinetd.8 zdump.8 zic.8
-man_MANS = $(manpages)
+man_MANS = $(MANPAGES)
 all: all-am
 
 .SUFFIXES:
@@ -151,6 +155,51 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+install-man8: $(man8_MANS) $(man_MANS)
+	@$(NORMAL_INSTALL)
+	test -z "$(man8dir)" || $(MKDIR_P) "$(DESTDIR)$(man8dir)"
+	@list='$(man8_MANS) $(dist_man8_MANS) $(nodist_man8_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.8*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  if test -f $(srcdir)/$$i; then file=$(srcdir)/$$i; \
+	  else file=$$i; fi; \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    8*) ;; \
+	    *) ext='8' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man8dir)/$$inst'"; \
+	  $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man8dir)/$$inst"; \
+	done
+uninstall-man8:
+	@$(NORMAL_UNINSTALL)
+	@list='$(man8_MANS) $(dist_man8_MANS) $(nodist_man8_MANS)'; \
+	l2='$(man_MANS) $(dist_man_MANS) $(nodist_man_MANS)'; \
+	for i in $$l2; do \
+	  case "$$i" in \
+	    *.8*) list="$$list $$i" ;; \
+	  esac; \
+	done; \
+	for i in $$list; do \
+	  ext=`echo $$i | sed -e 's/^.*\\.//'`; \
+	  case "$$ext" in \
+	    8*) ;; \
+	    *) ext='8' ;; \
+	  esac; \
+	  inst=`echo $$i | sed -e 's/\\.[0-9a-z]*$$//'`; \
+	  inst=`echo $$inst | sed -e 's/^.*\///'`; \
+	  inst=`echo $$inst | sed '$(transform)'`.$$ext; \
+	  echo " rm -f '$(DESTDIR)$(man8dir)/$$inst'"; \
+	  rm -f "$(DESTDIR)$(man8dir)/$$inst"; \
+	done
 tags: TAGS
 TAGS:
 
@@ -186,8 +235,11 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(MANS)
 installdirs:
+	for dir in "$(DESTDIR)$(man8dir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -230,7 +282,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-man
 
 install-dvi: install-dvi-am
 
@@ -240,7 +292,7 @@ install-html: install-html-am
 
 install-info: install-info-am
 
-install-man:
+install-man: install-man8
 
 install-pdf: install-pdf-am
 
@@ -264,7 +316,9 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-man
+
+uninstall-man: uninstall-man8
 
 .MAKE: install-am install-strip
 
@@ -273,11 +327,11 @@ uninstall-am:
 	info info-am install install-am install-data install-data-am \
 	install-dvi install-dvi-am install-exec install-exec-am \
 	install-html install-html-am install-info install-info-am \
-	install-man install-pdf install-pdf-am install-ps \
+	install-man install-man8 install-pdf install-pdf-am install-ps \
 	install-ps-am install-strip installcheck installcheck-am \
 	installdirs maintainer-clean maintainer-clean-generic \
 	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
-	uninstall-am
+	uninstall-am uninstall-man uninstall-man8
 
 
 @UTF8_TRUE@%.8: $(srcdir)/../%.8
