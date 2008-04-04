@@ -9,8 +9,7 @@ manpages-zh (1.5.1-1) unstable; urgency=low
   * debian/rules: Please stop providing man pages belonging to the passwd and
     login packages (Closes: #330577)
   * debian/control: bump standards version to 3.7.3.
-  * debian/rules: debian-rules-ignores-make-clean-error.
-  * debian/copyright: 
+  * debian/copyright:
     - copyright-should-refer-to-common-license-file-for-gfdl.
     - add new copyright holder.
   * debian/control: new homepage, move homepage from description to a field.
@@ -19,8 +18,9 @@ manpages-zh (1.5.1-1) unstable; urgency=low
   * debian/control: build depends on cdbs.
   * debian/rules: use cdbs.
   * debian/docs: remove unaviable files.
+  * remove unneed files: debian/03*, debian/README.Debian.
 
- -- LI Daobing <lidaobing@gmail.com>  Thu, 03 Apr 2008 23:21:05 +0800
+ -- LI Daobing <lidaobing@gmail.com>  Fri, 04 Apr 2008 16:27:56 +0800
 
 manpages-zh (1.5-1) unstable; urgency=high
 
