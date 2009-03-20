@@ -12,6 +12,7 @@ Replaces: zh-trans
 Provides: zh-trans
 Suggests: man-browser
 Conflicts: zh-trans
+Depends: ${misc:Depends}
 Description: Chinese manual pages
  This package contains the Chinese manual pages translated by
  the Chinese Man Pages Project (CMPP).  Both zh_CN and zh_TW

@@ -4,8 +4,9 @@ manpages-zh (1.5.1-2) unstable; urgency=low
     provided by mplayer package and mencoder.1 is a soft link to mplayer.1.
     (Closes: #520459)
   * debian/control: bump standards version to 3.8.1, no changes needed. 
+  * debian/control: fix debhelper-but-no-misc-depends.
 
- -- LI Daobing <lidaobing@gmail.com>  Fri, 20 Mar 2009 22:28:22 +0800
+ -- LI Daobing <lidaobing@gmail.com>  Fri, 20 Mar 2009 22:32:01 +0800
 
 manpages-zh (1.5.1-1) unstable; urgency=low
 
