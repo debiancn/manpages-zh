@@ -3,7 +3,7 @@ Section: doc
 Priority: optional
 Maintainer: LI Daobing <lidaobing@gmail.com>
 Build-Depends: debhelper (>= 4.0.0), cdbs, zh-autoconvert (>= 0.3.13), perl
-Standards-Version: 3.7.3
+Standards-Version: 3.8.1
 Homepage: http://code.google.com/p/manpages-zh/
 
 Package: manpages-zh
