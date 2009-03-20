@@ -1,10 +1,11 @@
 manpages-zh (1.5.1-2) unstable; urgency=low
 
-  * debian/rules: remove mplayer.1, which is already provided by mplayer
-    package.  (Closes: #520459)
+  * debian/rules: remove mplayer.1 and mencoder.1, mplayer.1 is already
+    provided by mplayer package and mencoder.1 is a soft link to mplayer.1.
+    (Closes: #520459)
   * debian/control: bump standards version to 3.8.1, no changes needed. 
 
- -- LI Daobing <lidaobing@gmail.com>  Fri, 20 Mar 2009 22:22:05 +0800
+ -- LI Daobing <lidaobing@gmail.com>  Fri, 20 Mar 2009 22:28:22 +0800
 
 manpages-zh (1.5.1-1) unstable; urgency=low
 
