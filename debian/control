@@ -5,6 +5,9 @@ Maintainer: LI Daobing <lidaobing@gmail.com>
 Build-Depends: debhelper (>= 4.0.0), cdbs, zh-autoconvert (>= 0.3.13), perl
 Standards-Version: 3.8.1
 Homepage: http://code.google.com/p/manpages-zh/
+DM-Upload-Allowed: yes
+Vcs-Browser: http://git.debian.org/?p=collab-maint/manpages-zh.git
+Vcs-Git: git://git.debian.org/git/collab-maint/manpages-zh.git
 
 Package: manpages-zh
 Architecture: all
