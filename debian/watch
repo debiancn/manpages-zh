@@ -1,0 +1,3 @@
+version=3
+http://code.google.com/p/manpages-zh/downloads/list \
+http://manpages-zh.googlecode.com/files/manpages-zh-(.*)\.tar\.gz
