@@ -7,8 +7,9 @@ manpages-zh (1.5.2-1) unstable; urgency=low
     - bump standards version to 3.9.2.
     - update homepage
     - update Vcs-* fields.
+  * debian/rules: updated.
 
- -- LI Daobing <lidaobing@debian.org>  Sat, 09 Jul 2011 23:37:52 +0800
+ -- LI Daobing <lidaobing@debian.org>  Sat, 09 Jul 2011 23:39:39 +0800
 
 manpages-zh (1.5.1-3) unstable; urgency=low
 
