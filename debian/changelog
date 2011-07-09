@@ -1,6 +1,6 @@
 manpages-zh (1.5.2-1) unstable; urgency=low
 
-  * new upstream release.
+  * new upstream release (Closes: #633303).
   * debian/watch: updated.
   * debain/control:
     - update maintainer, add me to uploader
@@ -9,7 +9,7 @@ manpages-zh (1.5.2-1) unstable; urgency=low
     - update Vcs-* fields.
   * debian/rules: updated.
 
- -- LI Daobing <lidaobing@debian.org>  Sat, 09 Jul 2011 23:39:39 +0800
+ -- LI Daobing <lidaobing@debian.org>  Sat, 09 Jul 2011 23:44:16 +0800
 
 manpages-zh (1.5.1-3) unstable; urgency=low
 
