@@ -1,12 +1,14 @@
 Source: manpages-zh
 Section: doc
 Priority: optional
-Maintainer: LI Daobing <lidaobing@debian.org>
+Maintainer: Debian Chinese Team <chinese-developers@lists.alioth.debian.org>
+Uploaders:
+ LI Daobing <lidaobing@debian.org>
 Build-Depends: debhelper (>= 7), cdbs, zh-autoconvert (>= 0.3.13), perl
-Standards-Version: 3.8.4
-Homepage: http://code.google.com/p/manpages-zh/
-Vcs-Browser: http://git.debian.org/?p=collab-maint/manpages-zh.git
-Vcs-Git: git://git.debian.org/git/collab-maint/manpages-zh.git
+Standards-Version: 3.9.2
+Homepage: https://github.com/lidaobing/manpages-zh
+Vcs-Browser: http://git.debian.org/?p=chinese/manpages-zh.git
+Vcs-Git: git://git.debian.org/git/chinese/manpages-zh.git
 
 Package: manpages-zh
 Architecture: all
