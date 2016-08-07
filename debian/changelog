@@ -1,3 +1,13 @@
+manpages-zh (1.5.3+ds-1) UNRELEASED; urgency=medium
+
+  * new upstream release.
+  * debian/rules: switch to debhelper/dh build system.
+  * debian/control:
+    - bump standards version to 3.9.8.
+    - update Vcs-* fields.
+
+ -- Boyuan Yang <073plan@gmail.com>  Sun, 07 Aug 2016 21:42:30 +0800
+
 manpages-zh (1.5.2-1) unstable; urgency=low
 
   * new upstream release (Closes: #633303).
