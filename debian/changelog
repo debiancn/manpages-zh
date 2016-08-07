@@ -8,6 +8,15 @@ manpages-zh (1.5.3+ds-1) UNRELEASED; urgency=medium
 
  -- Boyuan Yang <073plan@gmail.com>  Sun, 07 Aug 2016 21:42:30 +0800
 
+manpages-zh (1.5.2-1.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Remove apropos(1), man(1), whatis(1), man.conf(5), and man.config(5);
+    these are extremely outdated, contain incorrect information, and
+    conflict with man-db 2.6.4 (closes: #713925).
+
+ -- Colin Watson <cjwatson@debian.org>  Mon, 24 Jun 2013 10:15:59 +0100
+
 manpages-zh (1.5.2-1) unstable; urgency=low
 
   * new upstream release (Closes: #633303).
