@@ -12,8 +12,9 @@ include /usr/share/dpkg/buildflags.mk
 %:
 	dh $@ --with autoreconf
 
-# some strange target that will be investigated later
-binary-post-install/manpages-zh::
+# blacklist some pages that already exists in other projects
+override_dh_auto_install:
+	dh_auto_install
 	for l in zh_CN zh_TW; do \
 		for n in man5/passwd.5 man8/usermod.8 man8/groupdel.8 man8/userdel.8 man8/useradd.8 \
 			man8/chpasswd.8 man8/groupmod.8 man8/groupadd.8 man1/su.1 man1/chsh.1 \
