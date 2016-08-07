@@ -1,9 +1,18 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
+# See debhelper(7) (uncomment to enable)
+# output every command that modifies files on the build system.
+#export DH_VERBOSE = 1
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/autotools.mk
+# see EXAMPLES in dpkg-buildflags(1) and read /usr/share/dpkg/*
+include /usr/share/dpkg/default.mk
+include /usr/share/dpkg/buildflags.mk
 
+# main packaging script based on dh7 syntax
+%:
+	dh $@ --with autoreconf
+
+# some strange target that will be investigated later
 binary-post-install/manpages-zh::
 	for l in zh_CN zh_TW; do \
 		for n in man5/passwd.5 man8/usermod.8 man8/groupdel.8 man8/userdel.8 man8/useradd.8 \

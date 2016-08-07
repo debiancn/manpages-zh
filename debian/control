@@ -4,11 +4,11 @@ Priority: optional
 Maintainer: Debian Chinese Team <chinese-developers@lists.alioth.debian.org>
 Uploaders:
  LI Daobing <lidaobing@debian.org>
-Build-Depends: debhelper (>= 7), cdbs, zh-autoconvert (>= 0.3.13), perl
-Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 9), dh-autoreconf, zh-autoconvert (>= 0.3.13), perl
+Standards-Version: 3.9.8
 Homepage: https://github.com/lidaobing/manpages-zh
-Vcs-Browser: http://git.debian.org/?p=chinese/manpages-zh.git
-Vcs-Git: git://git.debian.org/git/chinese/manpages-zh.git
+Vcs-Browser: https://anonscm.debian.org/cgit/chinese/manpages-zh.git
+Vcs-Git: https://anonscm.debian.org/cgit/chinese/manpages-zh.git
 
 Package: manpages-zh
 Architecture: all
