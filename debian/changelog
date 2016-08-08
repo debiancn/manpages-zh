@@ -1,6 +1,8 @@
 manpages-zh (1.5.3+ds-1) UNRELEASED; urgency=medium
 
   * new upstream release.
+    - add zh.tmac workaround, borrowed from groff trunk.
+    - add --enable-cjkpunct-workaround for zh.tmac.
   * debian/rules: switch to debhelper/dh build system.
   * debian/control:
     - bump standards version to 3.9.8.
