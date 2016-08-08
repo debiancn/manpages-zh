@@ -1,3 +1,2 @@
-version=3
-https://github.com/lidaobing/manpages-zh/archives/master \
-/downloads/lidaobing/manpages-zh/manpages-zh-(.*)\.tar\.bz2
+version=4
+opts="dversionmangle=s/(\+\d*)?\+ds\d*$//,repack,compression=xz,repacksuffix=+ds" https://github.com/lidaobing/manpages-zh/tags /.*v(.+)@ARCHIVE_EXT@ debian uupdate
