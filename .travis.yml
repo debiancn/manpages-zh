@@ -5,7 +5,7 @@ services:
   - docker
 
 script:
-  - wget -O- http://travis.debian.net/script.sh | sh -
+  - wget -O- https://hosiet.me/resources/travis_debian.sh | sh -
 
 branches:
   except:
